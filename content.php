@@ -17,14 +17,6 @@ if(empty($_SESSION['sortBy']))
 		   } else $_SESSION['AscDesc'] = "ASC";
 		   $_SESSION['sortBy'] = $_POST['sort'];
 	   }
-<<<<<<< HEAD
-?>
-<div class="section">
-                
-                  <div class="row">
-                    <div class="col-md-12">
-					<form action="content.php" method="POST">
-=======
 	   
 if (isset($_POST['school'])){
 		$schools = [];
@@ -64,7 +56,6 @@ $_SESSION['checks'] = $schools;
 					<input type="checkbox" name="school[]" value="Systems Technology Institute" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("Systems Technology Institute", $schools)) echo "checked"; ?>> STI<br>
 					<input type="submit" value="Update Table">
                     <div class="col-md-12">
->>>>>>> dc4f38668967213d3682e48efd143a862a8dde9b
                       <table>
                         <thead>						
                           <tr>
@@ -85,16 +76,6 @@ $_SESSION['checks'] = $schools;
 								if (empty($_POST['search']))
 								$search 	= "";
 								else						
-<<<<<<< HEAD
-								$search 	= $_POST['search'];
-								//$school		= $_POST['school'];
-								$sortBy 	=  $_SESSION['sortBy'];
-								$ascdesc	=  $_SESSION['AscDesc'];
-								$query = "SELECT name as '0', lastname as '1', birthday as '2', university as '3'
-										FROM students
-										ORDER BY $sortBy $ascdesc";
-								
-=======
 								$search 	= $_POST['search'];	
 								$sortBy 	=  $_SESSION['sortBy'];
 								$ascdesc	=  $_SESSION['AscDesc'];
@@ -104,7 +85,6 @@ $_SESSION['checks'] = $schools;
 										FROM table1
 										$schoolQuery
 										ORDER BY $sortBy $ascdesc";
->>>>>>> dc4f38668967213d3682e48efd143a862a8dde9b
 								$result =	mysqli_query($dbc,$query);
 								
 								while($row=mysqli_fetch_array($result,MYSQL_ASSOC)){
@@ -116,13 +96,10 @@ $_SESSION['checks'] = $schools;
 										echo "</tr>";
 								}
 							?>
-<<<<<<< HEAD
-=======
 							
 							
 							
 							
->>>>>>> dc4f38668967213d3682e48efd143a862a8dde9b
                         </tbody>
 						
                       </table>
