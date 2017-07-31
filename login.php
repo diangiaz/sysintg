@@ -14,9 +14,6 @@ if($login == true)
 {
 	header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/all.php");
 }
-
-
-
  /*
 if (isset($_SESSION['badlogin']))
   $_SESSION['badlogin']++;

@@ -17,12 +17,54 @@ if(empty($_SESSION['sortBy']))
 		   } else $_SESSION['AscDesc'] = "ASC";
 		   $_SESSION['sortBy'] = $_POST['sort'];
 	   }
+<<<<<<< HEAD
 ?>
 <div class="section">
                 
                   <div class="row">
                     <div class="col-md-12">
 					<form action="content.php" method="POST">
+=======
+	   
+if (isset($_POST['school'])){
+		$schools = [];
+		foreach($_POST['school'] as $choice){
+			array_push($schools, $choice);
+		}
+		
+		if(count($schools) == 1){
+		$first = $schools[0];
+		$schoolQuery = "WHERE university = '$first'";
+		} else {	
+			$schoolQuery = "WHERE ";
+			foreach($schools as $school){
+				$schoolQuery = $schoolQuery . "university = '$school' OR ";
+			}
+			$schoolQuery = rtrim($schoolQuery,"OR ");
+		}
+
+$_SESSION['checks'] = $schools;		
+}
+?>
+
+
+
+
+
+<div class="section">
+                
+				<form action="content.php" method="POST">
+                  <div class="row">
+					<input type="checkbox" name="school[]" value="Ateneo De Manila University" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("Ateneo De Manila University", $schools)) echo "checked"; ?>> ADMU <br>
+					<input type="checkbox" name="school[]" value="De La Salle University" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("De La Salle University", $schools)) echo "checked"; ?>> DLSU <br>
+					<input type="checkbox" name="school[]" value="Mapua Institute of Technology" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("Maputa Institute of Technology", $schools)) echo "checked"; ?>> MIT <br>
+					<input type="checkbox" name="school[]" value="Lyceum of the Philippines University" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("Lyceum of the Philippines", $schools)) echo "checked"; ?>> LPU<br>
+					<input type="checkbox" name="school[]" value="University of Santo Tomas" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("University of Santo Tomas", $schools)) echo "checked"; ?>> UST <br>
+					<input type="checkbox" name="school[]" value="University of the Philippines" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("University of the Philippines", $schools)) echo "checked"; ?>> UP <br>
+					<input type="checkbox" name="school[]" value="Systems Technology Institute" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("Systems Technology Institute", $schools)) echo "checked"; ?>> STI<br>
+					<input type="submit" value="Update Table">
+                    <div class="col-md-12">
+>>>>>>> dc4f38668967213d3682e48efd143a862a8dde9b
                       <table>
                         <thead>						
                           <tr>
@@ -43,6 +85,7 @@ if(empty($_SESSION['sortBy']))
 								if (empty($_POST['search']))
 								$search 	= "";
 								else						
+<<<<<<< HEAD
 								$search 	= $_POST['search'];
 								//$school		= $_POST['school'];
 								$sortBy 	=  $_SESSION['sortBy'];
@@ -51,6 +94,17 @@ if(empty($_SESSION['sortBy']))
 										FROM students
 										ORDER BY $sortBy $ascdesc";
 								
+=======
+								$search 	= $_POST['search'];	
+								$sortBy 	=  $_SESSION['sortBy'];
+								$ascdesc	=  $_SESSION['AscDesc'];
+								if (empty($schoolQuery))
+									$schoolQuery = "";
+								$query = "SELECT name as '0', lastname as '1', birthday as '2', university as '3'
+										FROM table1
+										$schoolQuery
+										ORDER BY $sortBy $ascdesc";
+>>>>>>> dc4f38668967213d3682e48efd143a862a8dde9b
 								$result =	mysqli_query($dbc,$query);
 								
 								while($row=mysqli_fetch_array($result,MYSQL_ASSOC)){
@@ -62,6 +116,13 @@ if(empty($_SESSION['sortBy']))
 										echo "</tr>";
 								}
 							?>
+<<<<<<< HEAD
+=======
+							
+							
+							
+							
+>>>>>>> dc4f38668967213d3682e48efd143a862a8dde9b
                         </tbody>
 						
                       </table>
