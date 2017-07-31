@@ -72,7 +72,7 @@ $_SESSION['STI'] = (in_array("Systems Technology Institute", $schools));
 	<input type="checkbox" name="school[]" value="University of the Philippines" <?php if ($_SESSION['UP']) echo "checked"; ?>> UP <br>
 	<input type="checkbox" name="school[]" value="Systems Technology Institute" <?php if ($_SESSION['STI']) echo "checked"; ?>> STI<br>
 	<input type="submit" value="Update Table">
-		<div class="col-md-12">
+		<div class="col-sm-12" style = "height: 65%;overflow-y:auto;overflow-x:auto;margin-bottom:20px">
 		<table border = "1">
 			<thead>						
 			<tr>
@@ -83,8 +83,7 @@ $_SESSION['STI'] = (in_array("Systems Technology Institute", $schools));
 			</tr>
 			</thead>
 			
-	</form>
-		</div>
+	
             <tbody>
 		
 			<?php
@@ -118,6 +117,8 @@ $_SESSION['STI'] = (in_array("Systems Technology Institute", $schools));
             </tbody>
 		
 		</table>
+		</div>
     </div>
+	</form>
 </div>
 			  
