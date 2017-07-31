@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('mysqlconnect.php');
+$schools = [];
 
 if(empty($_SESSION['sortBy']))
 	   $_SESSION['sortBy'] = 1;
@@ -19,7 +20,6 @@ if(empty($_SESSION['sortBy']))
 	   }
 	   
 if (isset($_POST['school'])){
-		$schools = [];
 		foreach($_POST['school'] as $choice){
 			array_push($schools, $choice);
 		}
@@ -34,26 +34,30 @@ if (isset($_POST['school'])){
 			}
 			$schoolQuery = rtrim($schoolQuery,"OR ");
 		}
-
-$_SESSION['checks'] = $schools;		
 }
+
+$_SESSION['ADMU'] = (in_array("Ateneo De Manila University", $schools));
+$_SESSION['DLSU'] = (in_array("De La Salle University", $schools));
+$_SESSION['MIT'] = (in_array("Mapua Institute of Technology", $schools));
+$_SESSION['LPU'] = (in_array("Lyceum of the Philippines University", $schools));
+$_SESSION['UST'] = (in_array("University of Santo Tomas", $schools));
+$_SESSION['UP'] = (in_array("University of the Philippines", $schools));
+$_SESSION['STI'] = (in_array("Systems Technology Institute", $schools));
+
 ?>
-
-
-
 
 
 <div class="section">
                 
 				<form action="content.php" method="POST">
                   <div class="row">
-					<input type="checkbox" name="school[]" value="Ateneo De Manila University" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("Ateneo De Manila University", $schools)) echo "checked"; ?>> ADMU <br>
-					<input type="checkbox" name="school[]" value="De La Salle University" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("De La Salle University", $schools)) echo "checked"; ?>> DLSU <br>
-					<input type="checkbox" name="school[]" value="Mapua Institute of Technology" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("Maputa Institute of Technology", $schools)) echo "checked"; ?>> MIT <br>
-					<input type="checkbox" name="school[]" value="Lyceum of the Philippines University" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("Lyceum of the Philippines", $schools)) echo "checked"; ?>> LPU<br>
-					<input type="checkbox" name="school[]" value="University of Santo Tomas" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("University of Santo Tomas", $schools)) echo "checked"; ?>> UST <br>
-					<input type="checkbox" name="school[]" value="University of the Philippines" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("University of the Philippines", $schools)) echo "checked"; ?>> UP <br>
-					<input type="checkbox" name="school[]" value="Systems Technology Institute" <?php $schools = []; foreach ($_SESSION['checks'] as $check) array_push($schools, $check); if (in_array("Systems Technology Institute", $schools)) echo "checked"; ?>> STI<br>
+					<input type="checkbox" name="school[]" value="Ateneo De Manila University" <?php if ($_SESSION['ADMU']) echo "checked"; ?>> ADMU <br>
+					<input type="checkbox" name="school[]" value="De La Salle University" <?php if ($_SESSION['DLSU']) echo "checked"; ?>> DLSU <br>
+					<input type="checkbox" name="school[]" value="Mapua Institute of Technology" <?php if ($_SESSION['MIT']) echo "checked"; ?>> MIT <br>
+					<input type="checkbox" name="school[]" value="Lyceum of the Philippines University" <?php if ($_SESSION['LPU']) echo "checked"; ?>> LPU<br>
+					<input type="checkbox" name="school[]" value="University of Santo Tomas" <?php if ($_SESSION['UST']) echo "checked"; ?>> UST <br>
+					<input type="checkbox" name="school[]" value="University of the Philippines" <?php if ($_SESSION['UP']) echo "checked"; ?>> UP <br>
+					<input type="checkbox" name="school[]" value="Systems Technology Institute" <?php if ($_SESSION['STI']) echo "checked"; ?>> STI<br>
 					<input type="submit" value="Update Table">
                     <div class="col-md-12">
                       <table>
