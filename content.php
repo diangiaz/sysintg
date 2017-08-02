@@ -39,9 +39,9 @@ if (isset($_POST['school'])){
 		
 		if(count($schools) == 1){
 		$first = $schools[0];
-		$schoolQuery = "WHERE university = '$first'";
+		$schoolQuery = "WHERE (university = '$first'";
 		} else {	
-			$schoolQuery = "WHERE ";
+			$schoolQuery = "WHERE (";
 			foreach($schools as $school){
 				$schoolQuery = $schoolQuery . "university = '$school' OR ";
 			}
@@ -71,6 +71,11 @@ $_SESSION['STI'] = (in_array("Systems Technology Institute", $schools));
 	<input type="checkbox" name="school[]" value="University of Santo Tomas" <?php if ($_SESSION['UST']) echo "checked"; ?>> UST <br>
 	<input type="checkbox" name="school[]" value="University of the Philippines" <?php if ($_SESSION['UP']) echo "checked"; ?>> UP <br>
 	<input type="checkbox" name="school[]" value="Systems Technology Institute" <?php if ($_SESSION['STI']) echo "checked"; ?>> STI<br>
+	<br>
+	
+	Ages <input type="number" name="ageX" min="0" max="2017" <?php if (isset($_POST['ageX'])){ $ageX = $_POST['ageX']; echo "value=$ageX";} ?>> ~
+	Ages <input type="number" name="ageY" min="0" max="2017" <?php if (isset($_POST['ageY'])){ $ageY = $_POST['ageY']; echo "value=$ageY";} ?>> 
+	<br>
 	<input type="submit" value="Update Table">
 		<div class="col-sm-12" style = "height: 65%;overflow-y:auto;overflow-x:auto;margin-bottom:20px">
 		<table border = "1">
@@ -93,14 +98,34 @@ $_SESSION['STI'] = (in_array("Systems Technology Institute", $schools));
 				$search 	= $_POST['search'];	
 				$sortBy 	=  $_SESSION['sortBy'];
 				$ascdesc	=  $_SESSION['AscDesc'];
+				
+				if (empty($ageX))
+					$ageX = 0;
+				
+				if (empty($ageY))
+					$ageY = 2017;
+
 				if (empty($schoolQuery))
 					$schoolQuery = "";
+				
+				
+				
+				if ($schoolQuery != ""){
 				$query = "SELECT name as '0', lastname as '1', birthday as '2', university as '3'
 						FROM table1
-						$schoolQuery
+						$schoolQuery)
+						AND ((((timestampdiff(year, birthday, curdate())) >= $ageX)AND((timestampdiff(year, birthday, curdate())) <= $ageY)) OR 
+								(((timestampdiff(year, birthday, curdate())) >= $ageY)AND((timestampdiff(year, birthday, curdate())) <= $ageX)))
 						ORDER BY $sortBy $ascdesc";
-				$result =	mysqli_query($dbc,$query);
+				} else {
+					$query = "SELECT name as '0', lastname as '1', birthday as '2', university as '3'
+						FROM table1
+						WHERE ((((timestampdiff(year, birthday, curdate())) >= $ageX)AND((timestampdiff(year, birthday, curdate())) <= $ageY)) OR 
+								(((timestampdiff(year, birthday, curdate())) >= $ageY)AND((timestampdiff(year, birthday, curdate())) <= $ageX)))
+						ORDER BY $sortBy $ascdesc";
+				}
 				
+				$result =	mysqli_query($dbc,$query);
 				while($row=mysqli_fetch_array($result,MYSQL_ASSOC)){
 						echo "<tr>                                                    ";
 						echo "<td>{$row['0']}</td>		                              ";
