@@ -5,14 +5,27 @@ if (isset($_POST['submit'])){
 
 $name =$_POST['username'];
 $pass = $_POST['password'];
+
+
+if($name == "onggobit" && $pass == "123")
+{
 $login = true;
+}
+else
+{
+	echo "MALI PO";
+}
+
+
+
+
 }
 
 
 
 if($login == true)
 {
-	header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/all.php");
+	header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/content.php");
 }
  /*
 if (isset($_SESSION['badlogin']))
